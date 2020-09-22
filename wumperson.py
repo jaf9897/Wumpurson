@@ -15,6 +15,7 @@ bot = commands.Bot(command_prefix='!')
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
 
+#Sends a random William Blake poem
 @bot.command()
 async def person(ctx):
     print("person invoked")
@@ -23,6 +24,7 @@ async def person(ctx):
     await asyncio.sleep(2)
     await ctx.send("So it is written.")
 
+#Plays 3 songs at the same time really loud
 @bot.command()
 async def friends(ctx):
     try:
