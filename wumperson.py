@@ -2,6 +2,9 @@ import discord
 from discord.ext import commands
 import random
 import asyncio
+import re
+import requests
+from bs4 import BeautifulSoup
 
 
 TOKEN = 'NTUwNTAyNjgwNTM2MDIzMDQx.D1jiQQ.Y9f_MmsbsZcP8cdSVEaw18CFPyo'
@@ -15,10 +18,37 @@ bot = commands.Bot(command_prefix='!')
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
 
-#Sends a random William Blake poem
+
 @bot.command()
 async def person(ctx):
-    print("person invoked")
+    await ctx.send("Generating image...")
+    site = "https://thispersondoesnotexist.com/"
+    response = requests.get(site)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    img_tags = soup.find_all('img')
+
+    urls = [img['src'] for img in img_tags]
+
+    for url in urls:
+        with open('image.jpg', 'wb') as f:
+            if 'http' not in url:
+                # sometimes an image source can be relative
+                # if it is provide the base url which also happens
+                # to be the site variable atm.
+                url = '{}{}'.format(site, url)
+            response = requests.get(url)
+            f.write(response.content)
+    try:
+        await ctx.send("This person does not exist:")
+        await ctx.send(file=discord.File('image.jpg'))
+    except ValueError:
+        await ctx.send("Image file error.")
+
+
+#Sends a random William Blake poem
+@bot.command()
+async def blake(ctx):
+    print("blake invoked")
     msg = random.choice(proverbs)
     await ctx.send(msg)
     await asyncio.sleep(2)
@@ -42,12 +72,12 @@ async def friends(ctx):
 
 @bot.command()
 async def resolved(ctx):
-    try:
+    if bot.voice_clients:
         for x in bot.voice_clients:
-            return await x.disconnect()
-        ctx.send("Conflict successfully resolved.")
-    except:
-        ctx.send("No conflict resolution currently active.")
+            await x.disconnect()
+        await ctx.send("Conflict successfully resolved.")
+    else:
+        await ctx.send("No conflict resolution currently active.")
 
 """
 React to emoji being added to a message
