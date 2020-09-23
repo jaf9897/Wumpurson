@@ -2,26 +2,29 @@ import discord
 from discord.ext import commands
 import random
 import asyncio
-import re
 import requests
 from bs4 import BeautifulSoup
-
 
 TOKEN = 'NTUwNTAyNjgwNTM2MDIzMDQx.D1jiQQ.Y9f_MmsbsZcP8cdSVEaw18CFPyo'
 blakes = open("blake.txt", "r")
 proverbs = blakes.read().split('^')
 blakes.close()
+
 member_join = open("memberjoin.txt", "r")
 member_join_phrases = member_join.read().split(',')
+member_join.close()
+
+swears_file = open('swears.txt', 'r')
+swears = swears_file.read().split(',')
 
 mentions = dict()
 bot = commands.Bot(command_prefix='!')
 client = discord.Client()
 
+
 @bot.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
-    print(random.choice(member_join_phrases))
 
 
 @bot.command()
@@ -50,7 +53,7 @@ async def person(ctx):
         await ctx.send("Image file error.")
 
 
-#Sends a random William Blake poem
+# Sends a random William Blake poem
 @bot.command()
 async def blake(ctx):
     print("blake invoked")
@@ -59,7 +62,8 @@ async def blake(ctx):
     await asyncio.sleep(2)
     await ctx.send("So it is written.")
 
-#Plays 3 songs at the same time really loud
+
+# Plays 3 songs at the same time really loud
 @bot.command()
 async def friends(ctx):
     try:
@@ -75,6 +79,7 @@ async def friends(ctx):
     except AttributeError:
         await ctx.send("Must be in a voice channel to resolve conflicts.")
 
+
 @bot.command()
 async def resolved(ctx):
     if bot.voice_clients:
@@ -84,11 +89,13 @@ async def resolved(ctx):
     else:
         await ctx.send("No conflict resolution currently active.")
 
+
 """
 React to emoji being added to a message
 This won't do anything because that emoji doesn't exist here but all we'd have to do is change the "20" to whatever
 emoji we'd want
 """
+
 
 @bot.event
 async def on_reaction_add(reaction, user):
@@ -105,9 +112,21 @@ async def on_reaction_add(reaction, user):
     if author == bot.user and name == "20":
         await channel.send("There is nothing more small brained than small braining a machine, you coward.")
 
+
 @bot.event
 async def on_member_join(member):
     channel = bot.get_channel(746860942746452051)
     await channel.send(random.choice(member_join_phrases))
+
+
+@bot.event
+async def on_message(message):
+    if any(bad_words in message.content.strip().lower() for bad_words in swears):
+        embed = discord.Embed(title="Swearing isn't permitted, shit head",
+                              description=f"""{message.author.mention}, use '~tip' to leave a tip""",
+                              color=discord.Color.dark_grey())
+        embed.set_image(url='https://iili.io/d8fGX2.jpg')
+        await message.channel.send(embed=embed)
+
 
 bot.run(TOKEN)
