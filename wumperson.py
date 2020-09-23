@@ -10,7 +10,7 @@ proverbs = blakes.read().split('^')
 blakes.close()
 member_join = open("memberjoin.txt", "r")
 member_join_phrases = member_join.read().split(',')
-member_join_phrases = compile
+
 mentions = dict()
 bot = commands.Bot(command_prefix='!')
 client = discord.Client()
