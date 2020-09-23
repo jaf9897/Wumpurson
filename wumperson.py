@@ -78,6 +78,6 @@ async def on_reaction_add(reaction, user):
 @bot.event
 async def on_member_join(member):
     channel = bot.get_channel(746860942746452051)
-    await channel.send(random.choice(f))
+    await channel.send(random.choice(member_join_phrases))
 
 bot.run(TOKEN)
