@@ -1,0 +1,9 @@
+{member} joined. You must construct additional pylons.,
+Never gonna give {member} up. Never let {member} down!,
+Hey! Listen! {member} has joined!,
+Ha! {member} has joined! You activated my trap card!,
+We've been expecting you {member}.,
+It's dangerous to go alone; take {member}!,
+Swoooosh. {member} just landed.,
+Brace yourselves. {member} just joined the server.,
+A wild {member} appeared.

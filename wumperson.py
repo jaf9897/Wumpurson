@@ -8,12 +8,17 @@ TOKEN = 'NTUwNTAyNjgwNTM2MDIzMDQx.D1jiQQ.Y9f_MmsbsZcP8cdSVEaw18CFPyo'
 blakes = open("blake.txt", "r")
 proverbs = blakes.read().split('^')
 blakes.close()
+member_join = open("memberjoin.txt", "r")
+member_join_phrases = member_join.read().split(',')
+member_join_phrases = compile
 mentions = dict()
 bot = commands.Bot(command_prefix='!')
+client = discord.Client()
 
 @bot.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
+    print(random.choice(member_join_phrases))
 
 #Sends a random William Blake poem
 @bot.command()
@@ -70,5 +75,9 @@ async def on_reaction_add(reaction, user):
     if author == bot.user and name == "20":
         await channel.send("There is nothing more small brained than small braining a machine, you coward.")
 
+@bot.event
+async def on_member_join(member):
+    channel = bot.get_channel(746860942746452051)
+    await channel.send(random.choice(f))
 
 bot.run(TOKEN)
