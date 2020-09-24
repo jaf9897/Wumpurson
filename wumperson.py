@@ -3,9 +3,19 @@ from discord.ext import commands
 import random
 import asyncio
 import requests
+from pymongo import MongoClient
 from bs4 import BeautifulSoup
 
+# 746860942746452048 server id
+
+# Connection URL for MongoDB
+mango_url = "mongodb+srv://dentifrag:pBn6ixQcgHEgeOYS@wumperson-swearing-poin.jgmys.mongodb.net/test"
+cluster = MongoClient(mango_url)
+db = cluster["swearingPoints"]
+collection = db["Points for Swearing"]
+
 TOKEN = 'NTUwNTAyNjgwNTM2MDIzMDQx.D1jiQQ.Y9f_MmsbsZcP8cdSVEaw18CFPyo'
+
 blakes = open("blake.txt", "r")
 proverbs = blakes.read().split('^')
 blakes.close()
@@ -17,8 +27,11 @@ member_join.close()
 swears_file = open('swears.txt', 'r')
 swears = swears_file.read().split(',')
 
+ricardo_gifs_file = open('Ricardo gifs.txt', 'r')
+ricardo_gifs = ricardo_gifs_file.read().split(',')
+
 mentions = dict()
-bot = commands.Bot(command_prefix='!')
+bot = commands.Bot(command_prefix='~')
 client = discord.Client()
 
 
@@ -90,6 +103,30 @@ async def resolved(ctx):
         await ctx.send("No conflict resolution currently active.")
 
 
+@bot.command()
+async def tip(ctx):
+    user = ctx.author.name
+    embed = discord.Embed(title="Thanks for the tip 🍆",
+                          description='Your tip will be added',
+                          color=discord.Color.dark_grey())
+    embed.set_image(url=random.choice(ricardo_gifs))
+    await ctx.send(embed=embed)
+    # after sending the embed, bot is either sending updated points,
+    # or is creating a new member if they haven't tipped before
+    my_query = {"_id": ctx.author.id}
+    if (collection.count_documents(my_query) == 0):
+        post = {"_id": ctx.author.id, "tips": 1}
+        collection.insert_one(post)
+        print('User was added to database')
+    else:
+        user = collection.find(my_query)
+        for result in user:
+            score = result["score"]
+        score += 1
+        collection.update_one({"_id": ctx.author.id}), {"$set": {"score": score}}
+        print("Value was updated")
+
+
 """
 React to emoji being added to a message
 This won't do anything because that emoji doesn't exist here but all we'd have to do is change the "20" to whatever
@@ -119,8 +156,12 @@ async def on_member_join(member):
     await channel.send(random.choice(member_join_phrases))
 
 
-@bot.event
-async def on_message(message):
+@bot.listen('on_message')
+async def swearing(message):
+    # ignoring messages from the bot, or else it causes ifinite ricardo
+    if message.author == bot.user:
+        return
+
     if any(bad_words in message.content.strip().lower() for bad_words in swears):
         embed = discord.Embed(title="Swearing isn't permitted, shit head",
                               description=f"""{message.author.mention}, use '~tip' to leave a tip""",

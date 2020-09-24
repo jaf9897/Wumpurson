@@ -26,9 +26,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40af7c8d-1b17-45c7-adb3-f802d169ab0d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Ricardo gifs.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/swears.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/swearingpoints.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testingjson.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ricardo gifs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Ricardo gifs.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wumperson.py" beforeDir="false" afterPath="$PROJECT_DIR$/wumperson.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -39,7 +40,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="features" />
+        <entry key="$PROJECT_DIR$" value="kind-of-working,-but-not-really" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -55,7 +56,28 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.wumperson">
+    <configuration name="testingjson" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Wumpurson" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/testingjson.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="wumperson" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Wumpurson" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -80,6 +102,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.wumperson" />
+        <item itemvalue="Python.testingjson" />
       </list>
     </recent_temporary>
   </component>
@@ -99,6 +122,31 @@
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/kind-of-working,-but-not-really" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
         <entry key="MAIN">
           <value>
             <State>
@@ -118,6 +166,27 @@
         </entry>
       </map>
     </option>
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="1" value="TOOL_WINDOW" />
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/kind-of-working,-but-not-really" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1600886732035">
@@ -128,22 +197,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040/-1.-1080.1920.1040@0.0.1920.1040" timestamp="1600886061052" />
-    <state width="1899" height="282" key="GridCell.Tab.0.bottom" timestamp="1600896699354">
+    <state width="1899" height="282" key="GridCell.Tab.0.bottom" timestamp="1600913012481">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="282" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040/-1.-1080.1920.1040@0.0.1920.1040" timestamp="1600896699354" />
-    <state width="1899" height="282" key="GridCell.Tab.0.center" timestamp="1600896699354">
+    <state width="1899" height="282" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040/-1.-1080.1920.1040@0.0.1920.1040" timestamp="1600913012481" />
+    <state width="1899" height="282" key="GridCell.Tab.0.center" timestamp="1600913012481">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="282" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040/-1.-1080.1920.1040@0.0.1920.1040" timestamp="1600896699354" />
-    <state width="1899" height="282" key="GridCell.Tab.0.left" timestamp="1600896699354">
+    <state width="1899" height="282" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040/-1.-1080.1920.1040@0.0.1920.1040" timestamp="1600913012481" />
+    <state width="1899" height="282" key="GridCell.Tab.0.left" timestamp="1600913012481">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="282" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040/-1.-1080.1920.1040@0.0.1920.1040" timestamp="1600896699354" />
-    <state width="1899" height="282" key="GridCell.Tab.0.right" timestamp="1600896699354">
+    <state width="1899" height="282" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040/-1.-1080.1920.1040@0.0.1920.1040" timestamp="1600913012481" />
+    <state width="1899" height="282" key="GridCell.Tab.0.right" timestamp="1600913012481">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="282" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040/-1.-1080.1920.1040@0.0.1920.1040" timestamp="1600896699354" />
+    <state width="1899" height="282" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040/-1.-1080.1920.1040@0.0.1920.1040" timestamp="1600913012481" />
     <state x="461" y="165" key="SettingsEditor" timestamp="1600886403587">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
