@@ -34,11 +34,9 @@ ricardo_gifs = ricardo_gifs_file.read().split(',')
 bot = commands.Bot(command_prefix='~')
 client = discord.Client()
 
-
 @bot.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
-
 
 @bot.command()
 async def person(ctx):
@@ -65,7 +63,6 @@ async def person(ctx):
     except ValueError:
         await ctx.send("Image file error.")
 
-
 # Sends a random William Blake poem
 @bot.command()
 async def blake(ctx):
@@ -74,7 +71,6 @@ async def blake(ctx):
     await ctx.send(msg)
     await asyncio.sleep(2)
     await ctx.send("So it is written.")
-
 
 # Plays 3 songs at the same time really loud
 @bot.command()
@@ -91,7 +87,6 @@ async def friends(ctx):
         await player.disconnect()
     except AttributeError:
         await ctx.send("Must be in a voice channel to resolve conflicts.")
-
 
 @bot.command()
 async def resolved(ctx):
@@ -111,27 +106,38 @@ async def piggybank(ctx):
     # and sorts them from highest to lowest
     for i in collection.find().sort('tips', -1):
         leaderboard_order.append(i)
-    #TODO add these usernames and tips to an embed to display users rank
     for users in leaderboard_order:
         users_in_descending_order.append(users['_id'])
         scores_in_descending_order.append(users['tips'])
-    print(users_in_descending_order)
-    print(scores_in_descending_order)
 
-    # embed = discord.Embed(title="You guys have some dirty mouths 👄",
-    #                       color=discord.Color.dark_grey())
-    # embed.set_thumbnail(url='https://i.ibb.co/ngsbzkf/988532.jpg')
-    # embed.add_field(name="Most Tips in the Swear Jar", value=leaderboard_order, inline=True)
-    # await ctx.channel.send(embed=embed)
+    embed = discord.Embed(title="You guys have some dirty mouths 👄", color=discord.Color.dark_grey())
+    embed.set_thumbnail(url='https://i.ibb.co/ngsbzkf/988532.jpg')
+    embed.add_field(name="Most Tips in the Swear Jar", value="I'll spend it on my new thong", inline=True)
+    # put users and scores in via index because they'll be in order from greatest to least from being sorted
+    embed.add_field(name="First place 🏆", value=users_in_descending_order[0] + ': $' + str(scores_in_descending_order[0]), inline=False)
+    embed.add_field(name="Second place", value=users_in_descending_order[1] + ': $' + str(scores_in_descending_order[1]), inline=False)
+    embed.add_field(name="Third place", value=users_in_descending_order[2] + ': $' + str(scores_in_descending_order[2]), inline=False)
+    await ctx.channel.send(embed=embed)
 
+@bot.command()
+async def mypiggybank(ctx):
+    author = ctx.message.author
+    leaderboard_order = []
+    users_in_descending_order = []
+    scores_in_descending_order = []
 
+    for i in collection.find().sort('tips', -1):
+        leaderboard_order.append(i)
+    for i in leaderboard_order:
+        users_in_descending_order.append(i['_id'])
+        scores_in_descending_order.append(i['tips'])
+    if author in users_in_descending_order:
+        print(users_in_descending_order.index())
 """
 React to emoji being added to a message
 This won't do anything because that emoji doesn't exist here but all we'd have to do is change the "20" to whatever
 emoji we'd want
 """
-
-
 @bot.event
 async def on_reaction_add(reaction, user):
     channel = reaction.message.channel
@@ -147,12 +153,10 @@ async def on_reaction_add(reaction, user):
     if author == bot.user and name == "20":
         await channel.send("There is nothing more small brained than small braining a machine, you coward.")
 
-
 @bot.event
 async def on_member_join(member):
     channel = bot.get_channel(746860942746452051)
     await channel.send(random.choice(member_join_phrases))
-
 
 @bot.listen('on_message')
 async def swearing(message):
@@ -179,6 +183,5 @@ async def swearing(message):
             score += 1
             collection.update_one({"_id": message.author.name}, {"$set": {"tips": score}})
             print("Value was updated")
-
 
 bot.run(TOKEN)
