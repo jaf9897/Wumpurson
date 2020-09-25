@@ -29,7 +29,7 @@ class Swearing(commands.Cog):
         if message.author == bot.user:
             return
 
-        if any(bad_words in message.content.strip().lower() for bad_words in swears):
+        if any(bad_words in message.content.lower().split() for bad_words in swears):
             embed = discord.Embed(title="Swearing isn't permitted, shit head",
                                   description=f"""{message.author.mention}, your tip will be added to the swear jar""",
                                   color=discord.Color.dark_grey())
