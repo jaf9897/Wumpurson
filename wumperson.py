@@ -26,11 +26,11 @@ member_join.close()
 
 swears_file = open('swears.txt', 'r')
 swears = swears_file.read().split(',')
+swears_file.close()
 
 ricardo_gifs_file = open('Ricardo gifs.txt', 'r')
 ricardo_gifs = ricardo_gifs_file.read().split(',')
 
-mentions = dict()
 bot = commands.Bot(command_prefix='~')
 client = discord.Client()
 
@@ -102,29 +102,27 @@ async def resolved(ctx):
     else:
         await ctx.send("No conflict resolution currently active.")
 
-
 @bot.command()
-async def tip(ctx):
-    user = ctx.author.name
-    embed = discord.Embed(title="Thanks for the tip 🍆",
-                          description='Your tip will be added',
-                          color=discord.Color.dark_grey())
-    embed.set_image(url=random.choice(ricardo_gifs))
-    await ctx.send(embed=embed)
-    # after sending the embed, bot is either sending updated points,
-    # or is creating a new member if they haven't tipped before
-    my_query = {"_id": ctx.author.id}
-    if (collection.count_documents(my_query) == 0):
-        post = {"_id": ctx.author.id, "tips": 1}
-        collection.insert_one(post)
-        print('User was added to database')
-    else:
-        user = collection.find(my_query)
-        for result in user:
-            score = result["score"]
-        score += 1
-        collection.update_one({"_id": ctx.author.id}), {"$set": {"score": score}}
-        print("Value was updated")
+async def piggybank(ctx):
+    leaderboard_order = []
+    users_in_descending_order = []
+    scores_in_descending_order = []
+    # this grabs the the collection from mongodb
+    # and sorts them from highest to lowest
+    for i in collection.find().sort('tips', -1):
+        leaderboard_order.append(i)
+    #TODO add these usernames and tips to an embed to display users rank
+    for users in leaderboard_order:
+        users_in_descending_order.append(users['_id'])
+        scores_in_descending_order.append(users['tips'])
+    print(users_in_descending_order)
+    print(scores_in_descending_order)
+
+    # embed = discord.Embed(title="You guys have some dirty mouths 👄",
+    #                       color=discord.Color.dark_grey())
+    # embed.set_thumbnail(url='https://i.ibb.co/ngsbzkf/988532.jpg')
+    # embed.add_field(name="Most Tips in the Swear Jar", value=leaderboard_order, inline=True)
+    # await ctx.channel.send(embed=embed)
 
 
 """
@@ -158,16 +156,29 @@ async def on_member_join(member):
 
 @bot.listen('on_message')
 async def swearing(message):
-    # ignoring messages from the bot, or else it causes ifinite ricardo
+    # ignoring messages from the bot, or else it causes infinite ricardo
     if message.author == bot.user:
         return
 
     if any(bad_words in message.content.strip().lower() for bad_words in swears):
         embed = discord.Embed(title="Swearing isn't permitted, shit head",
-                              description=f"""{message.author.mention}, use '~tip' to leave a tip""",
+                              description=f"""{message.author.mention}, your tip will be added to the swear jar""",
                               color=discord.Color.dark_grey())
-        embed.set_image(url='https://iili.io/d8fGX2.jpg')
+        embed.set_image(url=random.choice(ricardo_gifs))
         await message.channel.send(embed=embed)
+
+        my_query = {"_id": message.author.name}
+        if collection.count_documents(my_query) == 0:
+            post = {"_id": message.author.name, "tips": 1}
+            collection.insert_one(post)
+            print('User was added to database')
+        else:
+            user = collection.find(my_query)
+            for result in user:
+                score = result["tips"]
+            score += 1
+            collection.update_one({"_id": message.author.name}, {"$set": {"tips": score}})
+            print("Value was updated")
 
 
 bot.run(TOKEN)
