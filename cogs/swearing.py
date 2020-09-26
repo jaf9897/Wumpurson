@@ -14,6 +14,7 @@ swears_file.close()
 
 ricardo_gifs_file = open('Ricardo gifs.txt', 'r')
 ricardo_gifs = ricardo_gifs_file.read().split(',')
+ricardo_gifs_file.close()
 
 bot = commands.Bot(command_prefix='~')
 

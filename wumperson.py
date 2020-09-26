@@ -18,6 +18,7 @@ member_join_phrases = member_join.read().split(',')
 member_join.close()
 
 bot = commands.Bot(command_prefix='~')
+bot.remove_command('help')
 
 
 @bot.event
@@ -48,7 +49,7 @@ async def clear(ctx, amount=5):
 #     await member.ban(reason=reason)
 
 @bot.command()
-async def commands(ctx):
+async def help(ctx):
     embed = discord.Embed(title='List of Commands',
                           description='Use "~" as the prefix',
                           color=discord.Color.dark_grey())
@@ -56,7 +57,7 @@ async def commands(ctx):
                     value='chef\n commie\n love\n forget\n happy\n nake\n sexy\n updog',
                     inline=False)
     embed.add_field(name='General Commands',
-                    value='clear',
+                    value='clear\n silence',
                     inline=False)
     await ctx.channel.send(embed=embed)
 
