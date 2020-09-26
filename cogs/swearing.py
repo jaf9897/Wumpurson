@@ -79,7 +79,7 @@ class Swearing(commands.Cog):
     async def mypiggybank(self, ctx):
         """
         there is no name function to get the username by itself using 'ctx'
-        so this is splitting the whole username (e.g username#1234)
+        so this is splitting the whole username (e.g. username#1234)
         at the '#' symbol
         """
         author = str(ctx.message.author).split('#')[0]

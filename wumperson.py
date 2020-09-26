@@ -36,6 +36,8 @@ async def unload(ctx, extension):
 @bot.command()
 async def clear(ctx, amount=5):
     await ctx.channel.purge(limit=amount)
+    embed = discord.Embed(title='✅ Successfully deleted ' + str(amount) + ' messages')
+    await ctx.channel.send(embed=embed)
 
 # @bot.command()
 # async def kick(ctx, member : discord.Member, *, reason=None):
