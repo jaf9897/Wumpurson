@@ -189,7 +189,7 @@ async def on_member_join(member):
                     value='chef\n commie\n love\n forget\n happy\n nake\n sexy\n updog',
                     inline=False)
     embed.add_field(name='General Commands',
-                    value='clear\nsilence\npiggybank\nmypiggyank',
+                    value='clear\nsilence\unsi\npiggybank\nmypiggyank',
                     inline=False)
     await channel.send(embed=embed)
 
