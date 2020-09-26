@@ -12,8 +12,8 @@ async def is_silenced(message):
     return message.author == Silencer.silenced_user
 
 
-async def is_nick(ctx):
-    return ctx.author.id == 241842243441262593
+async def is_not_nick(ctx):
+    return ctx.author.id != 241842243441262593
 
 
 class Silencer(commands.Cog):
@@ -29,7 +29,7 @@ class Silencer(commands.Cog):
     # Events
     @commands.Cog.listener('on_message')
     async def message_silencer(self, message):
-        if message.author == self.bot.user or Silencer.silenced_user is None:
+        if message.author == self.bot.user or message.author != Silencer.silenced_user:
             return
 
         if (datetime.now() - Silencer.silence_start).total_seconds() > Silencer.silence_period:
@@ -37,9 +37,8 @@ class Silencer(commands.Cog):
             Silencer.silence_start = datetime(1970, 1, 1)
             Silencer.silence_period = 0
 
-        await message.channel.purge(limit=3, check=is_silenced, after=Silencer.silence_start)
-
-        if Silencer.first_silence and is_silenced(message):
+        if Silencer.first_silence and await is_silenced(message):
+            await message.delete()
             messages = [await message.channel.send(file=discord.File('top.png')),
                         await message.channel.send(message.content),
                         await message.channel.send(file=discord.File('bottom.png')),
@@ -48,6 +47,8 @@ class Silencer(commands.Cog):
             for m in messages:
                 await m.delete()
             Silencer.first_silence = False
+
+        await message.delete()
 
     @commands.Cog.listener('on_voice_state_update')
     async def channel_silencer(self, member, before, after):
@@ -58,11 +59,12 @@ class Silencer(commands.Cog):
             await member.move_to(None)
 
     @commands.command()
-    @commands.check(is_nick)
+    @commands.check(is_not_nick)
     async def silence(self, ctx, username, silence_time: int):
         try:
             if len(ctx.message.mentions) != 1:
-                await ctx.send("Usage: ~silence <@user> <minutes to silence user>")
+                await ctx.send("Incorrect number of mentions.\n"
+                               "Usage: ~silence <@user> <minutes to silence user>")
                 return
             if Silencer.silenced_user is not None:
                 await ctx.send("Only one soul can be silenced at a time.")
@@ -73,20 +75,32 @@ class Silencer(commands.Cog):
             Silencer.silence_period = silence_time * 60
             Silencer.first_silence = True
 
+            silID = ctx.message.mentions[0].id
+            silenced_member = ctx.guild.get_member(silID)
+
+            if silenced_member.voice is not None:
+                await silenced_member.move_to(None)
+
             await ctx.send("For {0} minutes, {1} shall be silenced.".format(silence_time, username))
 
         except ValueError:
-            print("Usage: ~silence <@user> <minutes to silence user>")
+            print("Value Error\n"
+                  "Usage: ~silence <@user> <minutes to silence user>")
 
     @silence.error
     async def silenceHandler(self, ctx, error):
-        await ctx.send("Usage: ~silence <@user> <minutes to silence user>")
-
+        print(error)
+        await ctx.send("err.\n"
+                       "Usage: ~silence <@user> <minutes to silence user>")
 
     @commands.command()
     async def unsilence(self, ctx):
         if Silencer.silenced_user is None:
             await ctx.send("No users are currently silenced")
+            return
+
+        if ctx.author == Silencer.silenced_user:
+            "Unsilence stifled"
             return
 
         pfp = Silencer.silenced_user.avatar_url
