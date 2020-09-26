@@ -14,6 +14,7 @@ swears_file.close()
 
 ricardo_gifs_file = open('Ricardo gifs.txt', 'r')
 ricardo_gifs = ricardo_gifs_file.read().split(',')
+ricardo_gifs_file.close()
 
 bot = commands.Bot(command_prefix='~')
 
@@ -55,6 +56,7 @@ class Swearing(commands.Cog):
         leaderboard_order = []
         users_order = []
         tips_order = []
+        total_tips = 0
         # this grabs the the collection from mongodb
         # and sorts them from highest to lowest
         for i in collection.find().sort('tips', -1):
@@ -62,9 +64,11 @@ class Swearing(commands.Cog):
         for users in leaderboard_order:
             users_order.append(users['_id'])
             tips_order.append(users['tips'])
+            total_tips += users['tips']
 
         embed = discord.Embed(title="You guys have some dirty mouths 👄", color=discord.Color.dark_grey())
         embed.set_thumbnail(url='https://i.ibb.co/ngsbzkf/988532.jpg')
+        embed.add_field(name="Total Money in the Piggy Bank", value=total_tips, inline=True)
         embed.add_field(name="Most Tips in the Swear Jar", value="I'll spend it on a new thong", inline=True)
         # put users and scores in via index because they'll be in order from greatest to least from being sorted
         embed.add_field(name="First place 🏆",
@@ -79,7 +83,7 @@ class Swearing(commands.Cog):
     async def mypiggybank(self, ctx):
         """
         there is no name function to get the username by itself using 'ctx'
-        so this is splitting the whole username (e.g username#1234)
+        so this is splitting the whole username (e.g. username#1234)
         at the '#' symbol
         """
         author = str(ctx.message.author).split('#')[0]
