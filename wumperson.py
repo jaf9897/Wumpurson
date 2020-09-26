@@ -22,18 +22,28 @@ bot = commands.Bot(command_prefix='~')
 
 @bot.event
 async def on_ready():
+    await bot.change_presence(status=discord.Status.online, activity=discord.Game('~commands'))
     print('We have logged in as {0.user}'.format(bot))
-
 
 @bot.command()
 async def load(ctx, extension):
     bot.load_extension(f'cogs.{extension}')
 
-
 @bot.command()
 async def unload(ctx, extension):
     bot.unload_extension(f'cogs.{extension}')
 
+@bot.command()
+async def clear(ctx, amount=5):
+    await ctx.channel.purge(limit=amount)
+
+# @bot.command()
+# async def kick(ctx, member : discord.Member, *, reason=None):
+#     await member.kick(reason=reason)
+#
+# @bot.command()
+# async def ban(ctx, member : discord.Member, *, reason=None):
+#     await member.ban(reason=reason)
 
 @bot.command()
 async def commands(ctx):
@@ -47,7 +57,6 @@ async def commands(ctx):
                     value='clear',
                     inline=False)
     await ctx.channel.send(embed=embed)
-
 
 @bot.command()
 async def person(ctx):
@@ -74,7 +83,6 @@ async def person(ctx):
     except ValueError:
         await ctx.send("Image file error.")
 
-
 # Sends a random William Blake poem
 @bot.command()
 async def blake(ctx):
@@ -83,7 +91,6 @@ async def blake(ctx):
     await ctx.send(msg)
     await asyncio.sleep(2)
     await ctx.send("So it is written.")
-
 
 # Plays 3 songs at the same time really loud
 @bot.command()
@@ -101,7 +108,6 @@ async def friends(ctx):
     except AttributeError:
         await ctx.send("Must be in a voice channel to resolve conflicts.")
 
-
 @bot.command()
 async def resolved(ctx):
     if bot.voice_clients:
@@ -111,13 +117,11 @@ async def resolved(ctx):
     else:
         await ctx.send("No conflict resolution currently active.")
 
-
 """
 React to emoji being added to a message
 This won't do anything because that emoji doesn't exist here but all we'd have to do is change the "20" to whatever
 emoji we'd want
 """
-
 
 @bot.event
 async def on_reaction_add(reaction, user):
@@ -134,13 +138,22 @@ async def on_reaction_add(reaction, user):
     if author == bot.user and name == "20":
         await channel.send("There is nothing more small brained than small braining a machine, you coward.")
 
-
 @bot.event
 async def on_member_join(member):
     phrase = random.choice(member_join_phrases)
     channel = bot.get_channel(746860942746452051)
     await channel.send(phrase.format(member=member.mention))
 
+    embed = discord.Embed(title='List of Commands',
+                          description=f'{member.mention}, use "~" as the prefix',
+                          color=discord.Color.dark_grey())
+    embed.add_field(name='Andy Lenahan commands',
+                    value='chef\n commie\n love\n forget\n happy\n nake\n sexy\n updog',
+                    inline=False)
+    embed.add_field(name='General Commands',
+                    value='clear',
+                    inline=False)
+    await channel.send(embed=embed)
 
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
