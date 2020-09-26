@@ -8,9 +8,6 @@ from discord.ext import commands
 bot = commands.Bot(command_prefix='~')
 
 
-async def is_silenced(message):
-    return message.author == Silencer.silenced_user
-
 
 async def is_not_nick(ctx):
     return ctx.author.id != 241842243441262593
@@ -29,6 +26,10 @@ class Silencer(commands.Cog):
     # Events
     @commands.Cog.listener('on_message')
     async def message_silencer(self, message):
+
+        def is_silenced(message):
+            return message.author == Silencer.silenced_user
+
         if message.author == self.bot.user or message.author != Silencer.silenced_user:
             return
 
@@ -37,18 +38,20 @@ class Silencer(commands.Cog):
             Silencer.silence_start = datetime(1970, 1, 1)
             Silencer.silence_period = 0
 
-        if Silencer.first_silence and await is_silenced(message):
+        if Silencer.first_silence and is_silenced(message):
             await message.delete()
             messages = [await message.channel.send(file=discord.File('top.png')),
                         await message.channel.send(message.content),
                         await message.channel.send(file=discord.File('bottom.png')),
                         await message.channel.send("You're coming with me.")]
             await asyncio.sleep(3)
+
+
             for m in messages:
                 await m.delete()
             Silencer.first_silence = False
 
-        await message.delete()
+        await message.channel.purge(limit=5, check=is_silenced, after=Silencer.silence_start)
 
     @commands.Cog.listener('on_voice_state_update')
     async def channel_silencer(self, member, before, after):
