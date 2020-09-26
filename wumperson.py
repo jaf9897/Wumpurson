@@ -36,6 +36,20 @@ async def unload(ctx, extension):
 
 
 @bot.command()
+async def commands(ctx):
+    embed = discord.Embed(title='List of Commands',
+                          description='Use "~" as the prefix',
+                          color=discord.Color.dark_grey())
+    embed.add_field(name='Andy Lenahan commands',
+                    value='chef\n commie\n love\n forget\n happy\n nake\n sexy\n updog',
+                    inline=False)
+    embed.add_field(name='General Commands',
+                    value='clear',
+                    inline=False)
+    await ctx.channel.send(embed=embed)
+
+
+@bot.command()
 async def person(ctx):
     await ctx.send("Generating image...")
     site = "https://thispersondoesnotexist.com/"
@@ -123,8 +137,9 @@ async def on_reaction_add(reaction, user):
 
 @bot.event
 async def on_member_join(member):
+    phrase = random.choice(member_join_phrases)
     channel = bot.get_channel(746860942746452051)
-    await channel.send(random.choice(member_join_phrases))
+    await channel.send(phrase.format(member=member.mention))
 
 
 for filename in os.listdir('./cogs'):
