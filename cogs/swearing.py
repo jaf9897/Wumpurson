@@ -68,8 +68,8 @@ class Swearing(commands.Cog):
 
         embed = discord.Embed(title="You guys have some dirty mouths 👄", color=discord.Color.dark_grey())
         embed.set_thumbnail(url='https://i.ibb.co/ngsbzkf/988532.jpg')
-        embed.add_field(name="Total Money in the Piggy Bank", value=total_tips, inline=True)
-        embed.add_field(name="Most Tips in the Swear Jar", value="I'll spend it on a new thong", inline=True)
+        embed.add_field(name="Total Money in the Piggy Bank", value='$' + str(total_tips), inline=True)
+        embed.add_field(name="Most Tips in the Swear Jar", value="I'll spend it on a new thong", inline=False)
         # put users and scores in via index because they'll be in order from greatest to least from being sorted
         embed.add_field(name="First place 🏆",
                         value=users_order[0] + ': $' + str(tips_order[0]), inline=False)

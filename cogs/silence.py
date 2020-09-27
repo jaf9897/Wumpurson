@@ -64,6 +64,8 @@ class Silencer(commands.Cog):
     @commands.command()
     @commands.check(is_not_nick)
     async def silence(self, ctx, username, silence_time: int):
+        if username == is_not_nick():
+            await ctx.author.id("You cant use this Nick")
         try:
             if len(ctx.message.mentions) != 1:
                 await ctx.send("Incorrect number of mentions.\n"
