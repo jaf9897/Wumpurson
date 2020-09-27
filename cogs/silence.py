@@ -8,20 +8,20 @@ from discord.ext import commands
 bot = commands.Bot(command_prefix='~')
 
 
-
-async def is_not_nick(ctx):
-    return ctx.author.id != 241842243441262593
+async def is_nick(ctx):
+    return ctx.author.id == 241842243441262593
 
 
 class Silencer(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+
     silenced_user = None
     silence_start = datetime(1970, 1, 1)
     silence_period = 0
 
-    first_silence = False
+    first_silence = True
 
     # Events
     @commands.Cog.listener('on_message')
@@ -46,7 +46,6 @@ class Silencer(commands.Cog):
                         await message.channel.send("You're coming with me.")]
             await asyncio.sleep(3)
 
-
             for m in messages:
                 await m.delete()
             Silencer.first_silence = False
@@ -62,10 +61,10 @@ class Silencer(commands.Cog):
             await member.move_to(None)
 
     @commands.command()
-    @commands.check(is_not_nick)
     async def silence(self, ctx, username, silence_time: int):
-        if username == is_not_nick():
-            await ctx.author.id("You cant use this Nick")
+        if await is_nick(ctx):
+            await ctx.send("You cant use this Nick")
+            return
         try:
             if len(ctx.message.mentions) != 1:
                 await ctx.send("Incorrect number of mentions.\n"
