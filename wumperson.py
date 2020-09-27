@@ -135,7 +135,7 @@ async def friends(ctx):
         await ctx.send("Initiating conflict resolution program.")
         await ctx.send("Use ~resolved to terminate conflict resolution.")
         player = await channel.connect()
-        player.play(discord.FFmpegPCMAudio("friends.mp3"), after=lambda: print('done'))
+        player.play(discord.FFmpegPCMAudio(executable=r"C:\Users\Dakota Wagner\Desktop\ffmpeg-20200724-21442a8-win64-static\bin\ffmpeg.exe", source="friends.mp3"), after=lambda: print('done'))
         while player.is_playing():
             await asyncio.sleep(1)  # Will leave when the entire song is finished
         player.stop()
