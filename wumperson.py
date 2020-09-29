@@ -87,6 +87,11 @@ async def help(ctx):
                           '(Plays three songs about friendship simultaneously.)\n'
                           'Stop with ~resolved.',
                     inline=False)
+    embed.add_field(name='iss',
+                    value='Locates the current position of the International Space Station in orbit, and returns an '
+                          'image of its location.\n '
+                          "(Sometimes it will be over an ocean, and you won't be able to tell where it is)",
+                    inline=False)
 
     await ctx.channel.send(embed=embed)
 
@@ -187,7 +192,7 @@ async def on_member_join(member):
                           description='Use "~" as the prefix',
                           color=discord.Color.dark_grey())
     embed.add_field(name='Andy Lenahan commands',
-                    value=r'chef\n commie\n love\n forget\n happy\n nake\n sexy\n updog',
+                    value='chef\n commie\n love\n forget\n happy\n nake\n sexy\n updog',
                     inline=False)
     embed.add_field(name='clear',
                     value='Deletes a given amount of messages from the channel the command was sent from.\n'
@@ -214,6 +219,11 @@ async def on_member_join(member):
                           'execution.\n '
                           '(Plays three songs about friendship simultaneously.)\n'
                           'Stop with ~resolved.',
+                    inline=False)
+    embed.add_field(name='iss',
+                    value='Locates the current position of the International Space Station in orbit, and returns an '
+                          'image of its location.\n '
+                          "(Sometimes it will be over an ocean, and you won't be able to tell where it is)",
                     inline=False)
     await channel.send(embed=embed)
 
