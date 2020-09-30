@@ -92,6 +92,9 @@ async def help(ctx):
                           'image of its location.\n '
                           "(Sometimes it will be over an ocean, and you won't be able to tell where it is)",
                     inline=False)
+    embed.add_field(name="pokedex", value="Get the stats of a pokemon by putting the name after the command.\n ("
+                                          "Currently it is supported up to 7th gen. 8th gen is being added soon",
+                    inline=False)
 
     await ctx.channel.send(embed=embed)
 
@@ -224,6 +227,9 @@ async def on_member_join(member):
                     value='Locates the current position of the International Space Station in orbit, and returns an '
                           'image of its location.\n '
                           "(Sometimes it will be over an ocean, and you won't be able to tell where it is)",
+                    inline=False)
+    embed.add_field(name="pokedex", value="Get the stats of a pokemon by putting the name after the command.\n ("
+                                          "Currently it is supported up to 7th gen. 8th gen is being added soon",
                     inline=False)
     await channel.send(embed=embed)
 
