@@ -20,7 +20,7 @@ class SpaceStation(commands.Cog):
             iss_pos = req.json()
             latitude_longitude = '{0},{1}'.format(iss_pos["iss_position"]["latitude"], iss_pos["iss_position"]["longitude"])
 
-            # this abomination is to build the url that will give us the image from the lat long of the ISS
+            # this abomination is to build the url that will give us the image for the lat long of the ISS
             map_url = '{0}{1}&zoom=6&size={2}&markers=color:red|{1}&key={3}'.format(gmaps_URL, latitude_longitude, size, gmaps_API)
             embed = discord.Embed(title="International Space Station Location",
                                   description=latitude_longitude,
