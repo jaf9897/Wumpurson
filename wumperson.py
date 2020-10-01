@@ -7,7 +7,7 @@ import os
 from bs4 import BeautifulSoup
 
 # 732727937261895802 server id
-TOKEN = 'NTUwNTAyNjgwNTM2MDIzMDQx.XHdFkg.oapkAn8UpiKpvmAylE91HAo8hNo'
+TOKEN = 'NTUwNTAyNjgwNTM2MDIzMDQx.XHdFkg.I8_wErfZGPQdBd0dBWHx6R3u5Fo'
 
 blakes = open("text_files/blake.txt", "r")
 proverbs = blakes.read().split('^')
