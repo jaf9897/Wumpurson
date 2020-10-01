@@ -8,11 +8,11 @@ cluster = MongoClient(mango_url)
 db = cluster["swearingPoints"]
 collection = db["Points for Swearing"]
 
-swears_file = open('swears.txt', 'r')
+swears_file = open('text_files/swears.txt', 'r')
 swears = swears_file.read().split(',')
 swears_file.close()
 
-ricardo_gifs_file = open('Ricardo gifs.txt', 'r')
+ricardo_gifs_file = open('text_files/Ricardo gifs.txt', 'r')
 ricardo_gifs = ricardo_gifs_file.read().split(',')
 ricardo_gifs_file.close()
 

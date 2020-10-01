@@ -9,11 +9,11 @@ from bs4 import BeautifulSoup
 # 732727937261895802 server id
 TOKEN = 'NTUwNTAyNjgwNTM2MDIzMDQx.XHdFkg.oapkAn8UpiKpvmAylE91HAo8hNo'
 
-blakes = open("blake.txt", "r")
+blakes = open("text_files/blake.txt", "r")
 proverbs = blakes.read().split('^')
 blakes.close()
 
-member_join = open("memberjoin.txt", "r")
+member_join = open("text_files/memberjoin.txt", "r")
 member_join_phrases = member_join.read().split(',')
 member_join.close()
 
